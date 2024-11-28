@@ -5,7 +5,7 @@ services:
     environment:
       - POSTGRES_USER=josue
       - POSTGRES_PASSWORD=password 
-      - POSTGRES_DB=wagtailDevelopment
+      - POSTGRES_DB=pasarelaProduction
     volumes:
       - postgres_data:/var/lib/postgresql/data
   prod:
