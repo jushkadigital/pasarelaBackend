@@ -1,0 +1,66 @@
+# Use a stable version of Alpine as the base image
+FROM alpine:3.18
+
+# Set up the working directory
+WORKDIR /tmp
+
+# Set environment variables
+ENV HOME_DIR="/home/lunaruser"
+ENV LV_BRANCH="release-1.4/neovim-0.9"
+ENV PATH="$PATH:$HOME_DIR/.local/bin"
+
+# Install dependencies
+RUN apk update && \
+  apk add --no-cache \
+  yarn \
+  git \
+  python3 \
+  libtool \
+  libx11 \
+  libxtst \
+  xorg-server \
+  xauth \
+  bash \
+  nodejs \
+  npm \
+  cargo \
+  neovim \
+  ripgrep \
+  alpine-sdk \
+  bash \
+  curl \
+  shadow \
+  xsel \
+  py3-pip \
+  xclip
+
+RUN pip install pynvim
+
+# Definir variables de entorno para el grupo, usuario y sus IDs
+ARG gid=1001
+ARG uid=1001
+ARG user=lunaruser
+ARG group=docker
+
+
+# Clipboard DISPLAY
+ENV DISPLAY=:0
+# Crear el grupo y el usuario con los valores especificados
+RUN groupadd -g ${gid} ${group} && \
+  useradd -u ${uid} -g ${group} -s /bin/sh -m ${user}
+
+# Cambiar al usuario creado
+USER ${user}
+
+# RUN addgroup -S lunaruser && \
+# adduser -S lunaruser -G lunaruser --shell /bin/sh
+
+# Switch to the non-root user
+# USER lunaruser
+
+# Run LunarVim installation as the non-root user
+RUN curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/$LV_BRANCH/utils/installer/install.sh | \
+  bash -s -- --no-install-dependencies
+
+# Set default command to open LunarVim - when running directly in a docker container
+# CMD ["/home/lunaruser/.local/bin/lvim"]

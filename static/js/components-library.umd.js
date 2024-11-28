@@ -1,0 +1,9 @@
+(function(r,n){typeof exports=="object"&&typeof module<"u"?n(exports,require("react")):typeof define=="function"&&define.amd?define(["exports","react"],n):(r=typeof globalThis<"u"?globalThis:r||self,n(r.componentsLibrary={},r.React))})(this,function(r,n){"use strict";var d=document.createElement("style");d.textContent=`.myComponent{height:150px;width:100px}
+/*$vite$:1*/`,document.head.appendChild(d);var f={exports:{}},l={};/** @license React v16.14.0
+ * react-jsx-runtime.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */var v=n,m=60103;if(l.Fragment=60107,typeof Symbol=="function"&&Symbol.for){var y=Symbol.for;m=y("react.element"),l.Fragment=y("react.fragment")}var x=v.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner,h=Object.prototype.hasOwnProperty,b={key:!0,ref:!0,__self:!0,__source:!0};function _(o,e,a){var t,i={},p=null,c=null;a!==void 0&&(p=""+a),e.key!==void 0&&(p=""+e.key),e.ref!==void 0&&(c=e.ref);for(t in e)h.call(e,t)&&!b.hasOwnProperty(t)&&(i[t]=e[t]);if(o&&o.defaultProps)for(t in e=o.defaultProps,e)i[t]===void 0&&(i[t]=e[t]);return{$$typeof:m,type:o,key:p,ref:c,props:i,_owner:x.current}}l.jsx=_,l.jsxs=_,f.exports=l;var s=f.exports;const j=({name:o,initialValue:e})=>{const[a,t]=n.useState(parseFloat(e)||0),[i,p]=n.useState(1),c=()=>{t(u=>u*i)};return s.jsxs("div",{className:"myComponent",children:[s.jsx("input",{type:"number",value:a,onChange:u=>t(Number(u.target.value)),name:o}),s.jsx("input",{type:"number",placeholder:"Multiplicador",onChange:u=>p(Number(u.target.value))}),s.jsx("button",{type:"button",onClick:c,children:"Multiplicar"})]})};r.PriceMultiplier=j,Object.defineProperty(r,Symbol.toStringTag,{value:"Module"})});

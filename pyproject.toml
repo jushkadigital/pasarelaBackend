@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "pasarelabackend"
+version = "0.1.0"
+description = ""
+authors = ["josh <urgosxd@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+wagtail = "^6.1.1"
+django = "^5.0.6"
+dj-database-url = "^2.1.0"
+whitenoise = {extras = ["brotli"], version = "^6.6.0"}
+gunicorn = "^23.0.0"
+uvicorn = "^0.29.0"
+django-cloudinary-storage = "^0.3.0"
+psycopg = {extras = ["binary"], version = "^3.2.3"}
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

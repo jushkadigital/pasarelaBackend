@@ -1,0 +1,13 @@
+{% load i18n wagtailcore_tags %}
+{% block extra_js %}
+<script>
+  const {PriceMultiplier} = componentsLibrary;
+  console.log(PriceMultiplier)
+  ReactDOM.render(
+        React.createElement(
+          PriceMultiplier, // note - using .default here as this is how the global is set up
+        ), document.getElementById('react-price-widget'));
+
+  </script>
+{% endblock %}
+

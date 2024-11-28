@@ -1,0 +1,25 @@
+{% load i18n wagtailcore_tags %}
+{% load wagtailadmin_tags %}
+
+{% component panel %}
+{% block extra_js %}
+    {{ media.js }}
+<script>
+  const {PriceMultiplier} = componentsLibrary;
+    document.addEventListener('DOMContentLoaded', function() {
+      ReactDOM.render(
+        React.createElement(
+          PriceMultiplier, // note - using .default here as this is how the global is set up
+        ), document.getElementById('react-price-widget'));
+    });
+  </script>
+{% endblock %}
+{% block extra_css %}
+  {{ media.css }}
+{% endblock %}
+{% block content %}
+<div class="help-block">
+  aoeuaoeuaoeu
+</div>
+{% endblock %}
+
