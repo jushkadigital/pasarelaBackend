@@ -109,7 +109,7 @@ register_snippet(DataPasajeroViewSet)
 
 
 class DataGeneral(models.Model):
-    terminosyCondiciones = RichTextField(blank=True)
+    terminosyCondiciones = RichTextField(blank=True,verbose_name="Terminos y Condiciones")
     idTienda = models.CharField(max_length=255,verbose_name = "Id tienda")
     password = models.CharField(max_length=255,verbose_name = "Password Tienda")
     
@@ -125,7 +125,7 @@ class DataGeneral(models.Model):
 class DataGeneralViewSet(SnippetViewSet):
     model= DataGeneral
     icon = "tag"
-    list_display = [UpdatedAtColumn()]
+    list_display = ["idTienda",UpdatedAtColumn()]
     list_per_page = 1
     add_to_admin_menu = True
     menu_order = 550
