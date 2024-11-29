@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost',
     'http://localhost:1337',
+    'https://paymentserver.pdsviajes.com/',
     'http://XX.XX.XX.XX',
 ]
 # Application definition
