@@ -30,4 +30,8 @@ services:
       - prod
 volumes:
   postgres_data:
-    
+
+networks:
+  default:
+    external: true
+    name: proxiale
