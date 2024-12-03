@@ -22,7 +22,7 @@ from src.home.models import DataGeneral
 api_router = WagtailAPIRouter('wagtailapi')
 
 class CustomSnippetDataGeneralApiViewSet(BaseAPIViewSet):
-    body_fields = BaseAPIViewSet.body_fields + ['terminosyCondiciones','idTienda','password']
+    body_fields = BaseAPIViewSet.body_fields + ['terminosyCondiciones']
     renderer_classes = [JSONRenderer]
     name = "dataGeneral"
     model = DataGeneral

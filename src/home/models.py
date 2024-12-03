@@ -2,7 +2,7 @@ from django.db import models
 
 from wagtail.fields import RichTextField
 from wagtail.models import Page, ValidationError 
-from wagtail.admin.panels import FieldPanel, InlinePanel, MultipleChooserPanel,MultiFieldPanel,FieldRowPanel, ObjectList, PageChooserPanel, TabbedInterface, TitleFieldPanel
+from wagtail.admin.panels import FieldPanel,HelpPanel ,InlinePanel, MultipleChooserPanel,MultiFieldPanel,FieldRowPanel, ObjectList, PageChooserPanel, TabbedInterface, TitleFieldPanel
 from wagtail.admin.forms import WagtailAdminModelForm,WagtailAdminPageForm
 from .widgets import PriceMultWidget
 # from .panels import PriceSnippetPanel, ReactPriceMultiplierComponent
@@ -63,7 +63,7 @@ class DataPasajero(models.Model):
     )
     panels = [
     ]
-    base_form_class = CustomValidateForm
+    # base_form_class = CustomValidateForm
 
 
     def clean(self):
@@ -92,7 +92,7 @@ class DataPasajeroViewSet(SnippetViewSet):
     list_display = ["namePassenger", "namePaquete", UpdatedAtColumn()]
     list_per_page = 50
     add_to_admin_menu = True
-    menu_order = 400
+    menu_order = 100
     copy_view_enabled = False
     inspect_view_enabled = True
     admin_url_namespace = "dataPasajeros_views"
@@ -110,8 +110,6 @@ register_snippet(DataPasajeroViewSet)
 
 class DataGeneral(models.Model):
     terminosyCondiciones = RichTextField(blank=True,verbose_name="Terminos y Condiciones")
-    idTienda = models.CharField(max_length=255,verbose_name = "Id tienda")
-    password = models.CharField(max_length=255,verbose_name = "Password Tienda")
     
     def save(self, *args, **kwargs):
         # Asegurarse de que solo hay una instancia
@@ -122,10 +120,25 @@ class DataGeneral(models.Model):
     def __str__(self): 
         return "Informacion General"
 
+class Apis(models.Model):
+    idTienda = models.CharField(max_length=255,verbose_name = "Id tienda")
+    password = models.CharField(max_length=255,verbose_name = "Password Tienda")
+    hmacSha256 = models.CharField(max_length=255,verbose_name = "Clave HMAC-SHA-256 ")
+    
+    def save(self, *args, **kwargs):
+        # Asegurarse de que solo hay una instancia
+        if not self.pk and Apis.objects.exists():
+            raise ValidationError('Solo puede existir una instancia de SiteSettings.')
+        return super().save(*args, **kwargs)
+
+    def __str__(self): 
+        return "Apis privadas"
+
+
 class DataGeneralViewSet(SnippetViewSet):
     model= DataGeneral
     icon = "tag"
-    list_display = ["idTienda",UpdatedAtColumn()]
+    list_display = ["terminosyCondiciones",UpdatedAtColumn()]
     list_per_page = 1
     add_to_admin_menu = True
     menu_order = 550
@@ -134,10 +147,29 @@ class DataGeneralViewSet(SnippetViewSet):
     admin_url_namespace = "dataGeneral_views"
     base_url_path = "internal/dataGeneral"
     edit_handler = TabbedInterface([
-        ObjectList([FieldPanel('terminosyCondiciones'),FieldPanel('idTienda'),FieldPanel('password')],heading="Data")
+        ObjectList([FieldPanel('terminosyCondiciones')],heading="Data")
+    ])
+
+class ApisViewSet(SnippetViewSet):
+    model= Apis
+    icon = "tag"
+    list_display = ["idTienda",UpdatedAtColumn()]
+    list_per_page = 1
+    add_to_admin_menu = True
+    menu_order = 550
+    menu_label = "Apis"
+    inspect_view_enabled = True
+    admin_url_namespace = "apis_views"
+    base_url_path = "internal/apis"
+    edit_handler = TabbedInterface([
+        ObjectList([HelpPanel(
+            content="Aqui se modifican las apis proporcionadas por Izipay, para que tengan efectos los cambios, esperar 3-5 min, para el build de la interfaz del cliente"
+        ),FieldPanel('idTienda'),FieldPanel('password'),FieldPanel("hmacSha256")],heading="Data")
     ])
 
 register_snippet(DataGeneralViewSet)
+
+register_snippet(ApisViewSet)
 
 
 
