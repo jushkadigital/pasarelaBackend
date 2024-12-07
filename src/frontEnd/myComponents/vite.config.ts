@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: path.resolve(__dirname, '../../../static/js'),
-    emptyOutDir: true,
+    // emptyOutDir: true,
     lib:{
       entry: resolve(__dirname, "src/library.ts"),
       name: "componentsLibrary",

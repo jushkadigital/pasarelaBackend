@@ -1,0 +1,22 @@
+.wrapperPassenger {
+display: flex;
+justify-content: start; /* Centra horizontalmente */
+flex-direction: row;
+padding: 3px;
+column-gap: 3px;
+
+}
+.passengerButton {
+  width: 30px;
+  height: 30px;
+  border-radius: 80%;
+  background-color: rgb(46, 31, 94);
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  color: white; /* Si necesitas que el "+" sea visible */
+  font-size: 20px; /* Ajusta el tamaño del "+" */
+  border: none; /* Opcional, elimina bordes */
+  cursor: pointer; /* Opcional, para indicar que es un botón */
+  padding: 0;
+}

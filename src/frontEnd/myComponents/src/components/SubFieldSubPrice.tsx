@@ -1,5 +1,4 @@
 import React, { useState,Component } from 'react';
-import "./PriceMultiplier.css"
 
 // interface Props {
 // name: string,
@@ -8,20 +7,20 @@ import "./PriceMultiplier.css"
 
 
 
-class PriceMultiplier extends Component {
+class SubFieldSubPrice extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          sharedState: window.useGlobalStoreSus.getState().sharedState,
-          multiplier:   window.useGlobalStoreSus.getState().passengerShared
-
+            sharedState: window.useGlobalStoreSus.getState().sharedState,
+            multiplier: window.useGlobalStoreSus.getState().passengerShared,
+            percentage : 100 - window.useGlobalStoreSus.getState().percentageShared,
         };
     }
 
     componentDidMount() {
         // Suscribirse a cambios en el estado global
         this.unsubscribe = window.useGlobalStoreSus.subscribe((newState) => {
-            this.setState({ sharedState: newState.sharedState,multiplier:newState.passengerShared });
+            this.setState({ sharedState: newState.sharedState,multiplier:newState.passengerShared,percentage: 100 - newState.percentageShared });
         });
     }
 
@@ -31,15 +30,16 @@ class PriceMultiplier extends Component {
             this.unsubscribe();
         }
     }
+
     render() {
-        const { name } = this.props;
-        const { sharedState, multiplier } = this.state;
+        const { name} = this.props;
+        const { sharedState,multiplier,percentage} = this.state;
 
         return (
             <div className="myComponent">
                 <input
                     type="number"
-                    value={sharedState * multiplier}
+                    value={Math.round(sharedState*multiplier*(percentage/100))}
                     name={name}
                 />
             </div>
@@ -47,4 +47,5 @@ class PriceMultiplier extends Component {
     }
 }
 
-export default PriceMultiplier;
+export default SubFieldSubPrice;
+

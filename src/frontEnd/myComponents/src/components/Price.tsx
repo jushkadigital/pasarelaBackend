@@ -1,5 +1,5 @@
 import React, { useState,Component } from 'react';
-import "./PriceMultiplier.css"
+import "./Price.css"
 
 // interface Props {
 // name: string,
@@ -8,20 +8,18 @@ import "./PriceMultiplier.css"
 
 
 
-class PriceMultiplier extends Component {
+class Price extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          sharedState: window.useGlobalStoreSus.getState().sharedState,
-          multiplier:   window.useGlobalStoreSus.getState().passengerShared
-
+            sharedState: window.useGlobalStoreSus.getState().sharedState,
         };
     }
 
     componentDidMount() {
         // Suscribirse a cambios en el estado global
         this.unsubscribe = window.useGlobalStoreSus.subscribe((newState) => {
-            this.setState({ sharedState: newState.sharedState,multiplier:newState.passengerShared });
+            this.setState({ sharedState: newState.sharedState });
         });
     }
 
@@ -31,15 +29,22 @@ class PriceMultiplier extends Component {
             this.unsubscribe();
         }
     }
+
+    handleChange = (e) => {
+        const newValue = e.target.value;
+        window.useGlobalStoreSus.setState({ sharedState: Number(newValue) });
+    };
+
     render() {
-        const { name } = this.props;
-        const { sharedState, multiplier } = this.state;
+        const { name} = this.props;
+        const { sharedState } = this.state;
 
         return (
             <div className="myComponent">
                 <input
                     type="number"
-                    value={sharedState * multiplier}
+                    value={sharedState}
+                    onChange={this.handleChange}
                     name={name}
                 />
             </div>
@@ -47,4 +52,4 @@ class PriceMultiplier extends Component {
     }
 }
 
-export default PriceMultiplier;
+export default Price;

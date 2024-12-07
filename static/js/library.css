@@ -1,1 +1,1 @@
-.myComponent{height:150px;width:100px}
+.wrapperPassenger{display:flex;justify-content:start;flex-direction:row;padding:3px;column-gap:3px}.passengerButton{width:30px;height:30px;border-radius:80%;background-color:#2e1f5e;display:flex;justify-content:center;align-items:center;color:#fff;font-size:20px;border:none;cursor:pointer;padding:0}
