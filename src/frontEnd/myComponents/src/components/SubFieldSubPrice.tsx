@@ -42,7 +42,7 @@ class SubFieldSubPrice extends Component {
             <div className="myComponent">
                 <input
                     type="number"
-                    value={Math.roundToTwo(sharedState*multiplier*(percentage/100))}
+                    value={this.roundToTwo(sharedState*multiplier*(percentage/100))}
                     name={name}
                 />
             </div>

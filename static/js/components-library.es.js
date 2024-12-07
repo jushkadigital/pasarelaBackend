@@ -225,7 +225,7 @@ class T extends o {
       "input",
       {
         type: "number",
-        value: Math.roundToTwo(t * s * (a / 100)),
+        value: this.roundToTwo(t * s * (a / 100)),
         name: e
       }
     ) });
