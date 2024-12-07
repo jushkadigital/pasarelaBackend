@@ -1,7 +1,7 @@
 var b = Object.defineProperty;
 var m = (r, e, t) => e in r ? b(r, e, { enumerable: !0, configurable: !0, writable: !0, value: t }) : r[e] = t;
-var o = (r, e, t) => m(r, typeof e != "symbol" ? e + "" : e, t);
-import g, { Component as i } from "react";
+var i = (r, e, t) => m(r, typeof e != "symbol" ? e + "" : e, t);
+import g, { Component as o } from "react";
 var c = { exports: {} }, u = {};
 /** @license React v16.14.0
  * react-jsx-runtime.production.min.js
@@ -29,7 +29,7 @@ u.jsx = S;
 u.jsxs = S;
 c.exports = u;
 var n = c.exports;
-class G extends i {
+class G extends o {
   constructor(e) {
     super(e), this.state = {
       sharedState: window.useGlobalStoreSus.getState().sharedState,
@@ -56,10 +56,10 @@ class G extends i {
     ) });
   }
 }
-class C extends i {
+class C extends o {
   constructor(t) {
     super(t);
-    o(this, "handleChange", (t) => {
+    i(this, "handleChange", (t) => {
       const s = t.target.value;
       window.useGlobalStoreSus.setState({ sharedState: Number(s) });
     });
@@ -88,10 +88,10 @@ class C extends i {
     ) });
   }
 }
-class _ extends i {
+class _ extends o {
   constructor(t) {
     super(t);
-    o(this, "handleChange", (t) => {
+    i(this, "handleChange", (t) => {
       const s = Number(t.target.value);
       this.setState({ value: s }), window.useGlobalStoreSus.setState({ percentageShared: s });
     });
@@ -130,13 +130,13 @@ class _ extends i {
     ] });
   }
 }
-class N extends i {
+class N extends o {
   constructor(t) {
     super(t);
-    o(this, "handleChangeAdd", () => {
+    i(this, "handleChangeAdd", () => {
       window.useGlobalStoreSus.setState({ passengerShared: this.state.value + 1 });
     });
-    o(this, "handleChangeMinus", () => {
+    i(this, "handleChangeMinus", () => {
       window.useGlobalStoreSus.setState({ passengerShared: this.state.value > 1 ? this.state.value - 1 : this.state.value });
     });
     this.state = {
@@ -169,7 +169,7 @@ class N extends i {
     ] });
   }
 }
-class M extends i {
+class M extends o {
   constructor(e) {
     super(e), this.state = {
       sharedState: window.useGlobalStoreSus.getState().sharedState,
@@ -185,19 +185,22 @@ class M extends i {
   componentWillUnmount() {
     this.unsubscribe && this.unsubscribe();
   }
+  roundToTwo(e) {
+    return +(Math.round(e + "e+2") + "e-2");
+  }
   render() {
     const { name: e } = this.props, { sharedState: t, multiplier: s, percentage: a } = this.state;
     return /* @__PURE__ */ n.jsx("div", { className: "myComponent", children: /* @__PURE__ */ n.jsx(
       "input",
       {
         type: "number",
-        value: Math.round(t * s * (a / 100)),
+        value: this.roundToTwo(t * s * (a / 100)),
         name: e
       }
     ) });
   }
 }
-class P extends i {
+class T extends o {
   constructor(e) {
     super(e), this.state = {
       sharedState: window.useGlobalStoreSus.getState().sharedState,
@@ -213,13 +216,16 @@ class P extends i {
   componentWillUnmount() {
     this.unsubscribe && this.unsubscribe();
   }
+  roundToTwo(e) {
+    return +(Math.round(e + "e+2") + "e-2");
+  }
   render() {
     const { name: e } = this.props, { sharedState: t, multiplier: s, percentage: a } = this.state;
     return /* @__PURE__ */ n.jsx("div", { className: "myComponent", children: /* @__PURE__ */ n.jsx(
       "input",
       {
         type: "number",
-        value: Math.round(t * s * (a / 100)),
+        value: Math.roundToTwo(t * s * (a / 100)),
         name: e
       }
     ) });
@@ -230,6 +236,6 @@ export {
   C as Price,
   G as PriceMultiplier,
   M as SubFieldPrice,
-  P as SubFieldSubPrice,
+  T as SubFieldSubPrice,
   _ as WrapperComponentRange
 };

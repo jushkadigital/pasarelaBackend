@@ -30,6 +30,9 @@ class SubFieldPrice extends Component {
             this.unsubscribe();
         }
     }
+    roundToTwo(num) {
+    return +(Math.round(num + "e+2")  + "e-2");
+}
 
     render() {
         const { name} = this.props;
@@ -39,7 +42,7 @@ class SubFieldPrice extends Component {
             <div className="myComponent">
                 <input
                     type="number"
-                    value={Math.round(sharedState*multiplier*(percentage/100))}
+                    value={this.roundToTwo(sharedState*multiplier*(percentage/100))}
                     name={name}
                 />
             </div>
