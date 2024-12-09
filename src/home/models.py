@@ -73,7 +73,7 @@ class DataPasajero(models.Model):
                      ('email',self.email),
                      ('unitaryPrice',self.unitaryPrice),
                      ('numPasajeros',self.numPasajeros),
-                     ('finalPrice',self.unitaryPriceSub1),
+                     ('finalPrice',self.finalPrice),
                      ('percentage',self.percentaje),
                      ('unitaryPriceSub1',self.unitaryPriceSub1),
                      ('unitaryPriceSub2',self.unitaryPriceSub2),
