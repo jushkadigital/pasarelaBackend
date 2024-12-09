@@ -7,9 +7,11 @@ from wagtail.admin.forms import WagtailAdminModelForm,WagtailAdminPageForm
 from .widgets import ReactWidgetMultiplier, ReactWidgetPassenger, ReactWidgetPrice, ReactWidgetRangeWrapper, ReactWidgetSubFieldPrice, ReactWidgetSubFieldSubPrice
 # from .panels import PriceSnippetPanel, ReactPriceMultiplierComponent
 from wagtail.snippets.views.snippets import SnippetViewSet
-from wagtail.admin.ui.tables import UpdatedAtColumn
+from wagtail.admin.ui.tables import DateColumn, UpdatedAtColumn
 from wagtail.snippets.models import register_snippet
 from django import forms
+
+from django.utils.translation import gettext, gettext_lazy
 # Create your models here.
 
 
@@ -55,6 +57,7 @@ class DataPasajero(models.Model):
     unitaryPriceSub1 = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Final a Pagar")
     unitaryPriceSub2 = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Final por Pagar")
     referiCode = models.CharField(max_length=255,verbose_name = "Codigo de Referido")
+    _created_at = models.DateTimeField(auto_now_add=True,null=True)
     link = models.CharField(
         max_length=255,
         verbose_name="Link Creado",
@@ -89,10 +92,24 @@ class DataPasajero(models.Model):
     def __str__(self):
         return self.namePaquete
 
+class CreatedAtColumn(DateColumn):
+    """Outputs the _updated_at date annotation in human-readable format"""
+
+    def __init__(self, **kwargs):
+        super().__init__(
+            "_created_at",
+            label=kwargs.pop("label", gettext("Created")),
+            sort_key=kwargs.pop("sort_key", "_created_at"),
+            **kwargs,
+        )
+
+
+
+
 class DataPasajeroViewSet(SnippetViewSet):
     model = DataPasajero
     icon = "tag"
-    list_display = ["namePassenger", "namePaquete", UpdatedAtColumn()]
+    list_display = ["namePassenger", "namePaquete","email",CreatedAtColumn(),UpdatedAtColumn()]
     list_per_page = 50
     add_to_admin_menu = True
     menu_order = 100
@@ -103,7 +120,7 @@ class DataPasajeroViewSet(SnippetViewSet):
     # alternatively, you can use the following instead of filterset_class
     # list_filter = ["shirt_size"]
     # or
-    # list_filter = {"shirt_size": ["exact"], "name": ["icontains"]}
+    list_filter = {"namePassenger": ["icontains"],"email":["icontains"],"namePaquete":["icontains"],"unitaryPrice":["lt","gt"]}
     edit_handler = TabbedInterface([
         ObjectList([FieldPanel("namePassenger"),FieldPanel("email"),FieldPanel("namePaquete"),FieldPanel("unitaryPrice",widget=ReactWidgetPrice()),FieldPanel("numPasajeros",widget=ReactWidgetPassenger()),FieldPanel("finalPrice",widget=ReactWidgetMultiplier()),FieldPanel("percentaje",widget=ReactWidgetRangeWrapper()),FieldPanel("unitaryPriceSub1",widget=ReactWidgetSubFieldPrice()),FieldPanel("unitaryPriceSub2",widget=ReactWidgetSubFieldSubPrice()) ,FieldPanel("referiCode"),FieldPanel('link',widget=forms.TextInput(attrs={'disabled': 'disabled'}))], heading="Informacion General"),
     ])
