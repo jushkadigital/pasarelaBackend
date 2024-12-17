@@ -58,6 +58,17 @@ class DataPasajero(models.Model):
     unitaryPriceSub2 = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Final por Pagar")
     referiCode = models.CharField(max_length=255,verbose_name = "Codigo de Referido")
     _created_at = models.DateTimeField(auto_now_add=True,null=True)
+    PAYMENT_CHOICES = [
+        ('pendiente', 'Pendiente'),
+        ('izipay', 'Izipay'),
+        ('paypal', 'Paypal'),
+    ]
+    
+    status = models.CharField(
+        max_length=20,          # Longitud máxima del campo
+        choices=PAYMENT_CHOICES, # Opciones predefinidas
+        default='pendiente'     # Valor por defecto
+    )
     link = models.CharField(
         max_length=255,
         verbose_name="Link Creado",
@@ -67,7 +78,6 @@ class DataPasajero(models.Model):
     panels = [
     ]
     # base_form_class = CustomValidateForm
-
 
     def clean(self):
         super().clean()
@@ -109,7 +119,7 @@ class CreatedAtColumn(DateColumn):
 class DataPasajeroViewSet(SnippetViewSet):
     model = DataPasajero
     icon = "tag"
-    list_display = ["namePassenger", "namePaquete","email",CreatedAtColumn(),UpdatedAtColumn()]
+    list_display = ["namePassenger", "namePaquete","email",CreatedAtColumn(),UpdatedAtColumn(),"status"]
     list_per_page = 50
     add_to_admin_menu = True
     menu_order = 100

@@ -24,12 +24,14 @@ from django.conf import settings
 from .api import api_router
 
 
+
 urlpatterns = [
     # path('api/v2/', api_router.urls),
     path('cms/', include(wagtailadmin_urls)),
     path('documents/', include(wagtaildocs_urls)),
     path('pages/', include(wagtail_urls)),
     path('api/v2/', api_router.urls),
+    path('api/my/',include('src.home.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
