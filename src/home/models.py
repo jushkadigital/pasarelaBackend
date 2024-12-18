@@ -90,7 +90,8 @@ class DataPasajero(models.Model):
                      ('percentage',self.percentaje),
                      ('unitaryPriceSub1',self.unitaryPriceSub1),
                      ('unitaryPriceSub2',self.unitaryPriceSub2),
-                     ('referiCode',self.referiCode))
+                     ('referiCode',self.referiCode),
+                     ('id',self.id))
         res = []
         for i in URLparams:
             x=list(map(str,i))
