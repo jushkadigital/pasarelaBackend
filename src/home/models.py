@@ -46,6 +46,11 @@ class Global(Page):
         FieldPanel('body'),
     ]
 
+def remove_com_from_email(email):
+    if email.endswith('.com'):
+        return email.replace('.com', '')
+    return email
+
 class DataPasajero(models.Model):
     namePassenger = models.CharField(max_length=255,verbose_name = "Nombre del Pasajero")
     email = models.EmailField(max_length=100, verbose_name = "Correo Electronico",unique=False) 
@@ -79,11 +84,12 @@ class DataPasajero(models.Model):
     ]
     # base_form_class = CustomValidateForm
 
+    
     def clean(self):
         super().clean()
         URLparams = (('namePaquete',self.namePaquete),
                      ('namePassenger',self.namePassenger),
-                     ('email',self.email),
+                     ('email',remove_com_from_email(self.email)),
                      ('unitaryPrice',self.unitaryPrice),
                      ('numPasajeros',self.numPasajeros),
                      ('finalPrice',self.finalPrice),
