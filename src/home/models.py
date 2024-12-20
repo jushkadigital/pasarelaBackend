@@ -85,8 +85,8 @@ class DataPasajero(models.Model):
     # base_form_class = CustomValidateForm
 
     
-    def clean(self):
-        super().clean()
+    def save(self,*args,**kwargs):
+        super().save(*args,**kwargs)
         URLparams = (('namePaquete',self.namePaquete),
                      ('namePassenger',self.namePassenger),
                      ('email',remove_com_from_email(self.email)),
