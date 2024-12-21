@@ -196,7 +196,7 @@ class ApisViewSet(SnippetViewSet):
     base_url_path = "internal/apis"
     edit_handler = TabbedInterface([
         ObjectList([HelpPanel(
-            content="Aqui se modifican las apis proporcionadas por Izipay, para que tengan efectos los cambios, esperar 3-5 min, para el build de la interfaz del cliente"
+            content="Aqui se modifican las apis proporcionadas por Izipay , Paypal. Intercambiar a apis test para hacer pruebas, apis producion para que funcione ,para que tengan efectos los cambios, esperar 3-5 min, para el build de la interfaz del cliente"
         ),FieldPanel('idTienda'),FieldPanel('password'),FieldPanel("hmacSha256")],heading="Data")
     ])
 
