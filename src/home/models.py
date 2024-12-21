@@ -98,14 +98,10 @@ class DataPasajero(models.Model):
                      ('unitaryPriceSub2',self.unitaryPriceSub2),
                      ('referiCode',self.referiCode),
                      ('id',self.id))
-        res = []
-        for i in URLparams:
-            x=list(map(str,i))
-            a="=".join(x)
-            res.append(a)
-        res="&".join(res)
-        newLink = f"https://payment.pdsviajes.com/?{res}"
+        res = ["=".join(map(str, param)) for param in URLparams]
+        newLink = f"https://payment.pdsviajes.com/?{'&'.join(res)}"
         self.link = newLink
+        super().save(*args, **kwargs)
     def __str__(self):
         return self.namePaquete
 
