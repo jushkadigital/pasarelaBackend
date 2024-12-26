@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'src.home',
 
     'rest_framework',
+    'wagtail.locales',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -148,7 +149,9 @@ USE_I18N = True
 
 USE_TZ = True
 
+USE_I18N = True
 
+WAGTAIL_I18N_ENABLED = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
@@ -174,7 +177,15 @@ WAGTAIL_SITE_NAME = 'My Example Site'
 
 WAGTAILADMIN_BASE_URL = 'http://example.com'
 
+WAGTAILSIMPLETRANSLATION_SYNC_PAGE_TREE = True
+
 WAGTAILDOCS_EXTENSIONS = ['csv', 'docx', 'key', 'odt', 'pdf', 'pptx', 'rtf', 'txt', 'xlsx', 'zip']
+
+
+WAGTAIL_CONTENT_LANGUAGES = LANGUAGES = [
+    ('es', "Spanish"),
+    ('en', "English"),
+]
 
 LANGUAGE_CODE = 'es'
 

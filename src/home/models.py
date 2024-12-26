@@ -10,7 +10,7 @@ from wagtail.snippets.views.snippets import SnippetViewSet
 from wagtail.admin.ui.tables import DateColumn, UpdatedAtColumn
 from wagtail.snippets.models import register_snippet
 from django import forms
-
+from wagtail.models import TranslatableMixin,BootstrapTranslatableMixin
 from django.utils.translation import gettext, gettext_lazy
 # Create your models here.
 
@@ -63,6 +63,9 @@ class DataPasajero(models.Model):
     unitaryPriceSub2 = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Final por Pagar")
     referiCode = models.CharField(max_length=255,verbose_name = "Codigo de Referido")
     _created_at = models.DateTimeField(auto_now_add=True,null=True)
+    # class Meta(BootstrapTranslatableMixin.Meta):
+    #     verbose_name = 'DataPasajero'
+
     PAYMENT_CHOICES = [
         ('pendiente', 'Pendiente'),
         ('izipay', 'Izipay'),
@@ -156,7 +159,10 @@ class DataGeneral(models.Model):
 class Apis(models.Model):
     idTienda = models.CharField(max_length=255,verbose_name = "Id tienda")
     password = models.CharField(max_length=255,verbose_name = "Password Tienda")
-    hmacSha256 = models.CharField(max_length=255,verbose_name = "Clave HMAC-SHA-256 ")
+    # hmacSha256 = models.CharField(max_length=255,verbose_name = "Clave HMAC-SHA-256 ")
+    paypalClientId = models.CharField(max_length=255,verbose_name = "Client ID Paypal")
+    paypalSecret = models.CharField(max_length=255,verbose_name = "Secret Paypal")
+    paypalUrl = models.CharField(max_length=255,verbose_name = "URL Paypal")
     
     def save(self, *args, **kwargs):
         # Asegurarse de que solo hay una instancia
@@ -197,7 +203,7 @@ class ApisViewSet(SnippetViewSet):
     edit_handler = TabbedInterface([
         ObjectList([HelpPanel(
             content="Aqui se modifican las apis proporcionadas por Izipay , Paypal. Intercambiar a apis test para hacer pruebas, apis producion para que funcione ,para que tengan efectos los cambios, esperar 3-5 min, para el build de la interfaz del cliente"
-        ),FieldPanel('idTienda'),FieldPanel('password'),FieldPanel("hmacSha256")],heading="Data")
+        ),FieldPanel('idTienda'),FieldPanel('password'),FieldPanel("paypalClientId"),FieldPanel("paypalSecret"),FieldPanel("paypalUrl")],heading="Data")
     ])
 
 register_snippet(DataGeneralViewSet)
