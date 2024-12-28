@@ -12,6 +12,7 @@ from wagtail.snippets.models import register_snippet
 from django import forms
 from wagtail.models import TranslatableMixin,BootstrapTranslatableMixin
 from django.utils.translation import gettext, gettext_lazy
+from urllib.parse import quote
 # Create your models here.
 
 
@@ -90,8 +91,8 @@ class DataPasajero(models.Model):
     
     def save(self,*args,**kwargs):
         super().save(*args,**kwargs)
-        URLparams = (('namePaquete',self.namePaquete),
-                     ('namePassenger',self.namePassenger),
+        URLparams = (('namePaquete',quote(self.namePaquete)),
+                     ('namePassenger',quote(self.namePassenger)),
                      ('email',remove_com_from_email(self.email)),
                      ('unitaryPrice',self.unitaryPrice),
                      ('numPasajeros',self.numPasajeros),
@@ -99,7 +100,7 @@ class DataPasajero(models.Model):
                      ('percentage',self.percentaje),
                      ('unitaryPriceSub1',self.unitaryPriceSub1),
                      ('unitaryPriceSub2',self.unitaryPriceSub2),
-                     ('referiCode',self.referiCode),
+                     ('referiCode',quote(self.referiCode)),
                      ('id',self.id))
         res = ["=".join(map(str, param)) for param in URLparams]
         newLink = f"https://payment.pdsviajes.com/?{'&'.join(res)}"
