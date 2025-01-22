@@ -53,16 +53,16 @@ def remove_com_from_email(email):
     return email
 
 class DataPasajero(models.Model):
-    namePassenger = models.CharField(max_length=255,verbose_name = "Nombre del Pasajero")
-    email = models.EmailField(max_length=100, verbose_name = "Correo Electronico",unique=False) 
-    namePaquete = models.CharField(max_length=255,verbose_name = "Nombre del Paquete")
+    namePassenger = models.CharField(max_length=500,verbose_name = "Nombre del Pasajero")
+    email = models.EmailField(max_length=500, verbose_name = "Correo Electronico",unique=False) 
+    namePaquete = models.CharField(max_length=500,verbose_name = "Nombre del Paquete")
     unitaryPrice = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio")
     numPasajeros = models.IntegerField(verbose_name="Numero de Pasajeros")
     finalPrice = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Final")
     percentaje = models.IntegerField(verbose_name="Porcentage")
     unitaryPriceSub1 = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Final a Pagar")
     unitaryPriceSub2 = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Final por Pagar")
-    referiCode = models.CharField(max_length=255,verbose_name = "Codigo de Referido")
+    referiCode = models.CharField(max_length=500,verbose_name = "Codigo de Referido")
     _created_at = models.DateTimeField(auto_now_add=True,null=True)
     # class Meta(BootstrapTranslatableMixin.Meta):
     #     verbose_name = 'DataPasajero'
@@ -79,7 +79,7 @@ class DataPasajero(models.Model):
         default='pendiente'     # Valor por defecto
     )
     link = models.CharField(
-        max_length=255,
+        max_length=500,
         verbose_name="Link Creado",
         # editable=False,  # Hace que no se pueda modificar directamente en el modelo
         blank=True,  # Permite que sea vacío al guardar inicialmente
