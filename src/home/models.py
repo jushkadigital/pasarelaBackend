@@ -4,7 +4,7 @@ from wagtail.fields import RichTextField
 from wagtail.models import Page, ValidationError 
 from wagtail.admin.panels import FieldPanel,HelpPanel ,InlinePanel, MultipleChooserPanel,MultiFieldPanel,FieldRowPanel, ObjectList, PageChooserPanel, TabbedInterface, TitleFieldPanel
 from wagtail.admin.forms import WagtailAdminModelForm,WagtailAdminPageForm
-from .widgets import ReactWidgetMultiplier, ReactWidgetPassenger, ReactWidgetPrice, ReactWidgetRangeWrapper, ReactWidgetSubFieldPrice, ReactWidgetSubFieldSubPrice
+from .widgets import ReactWidgetMultiplier, ReactWidgetPassenger, ReactWidgetPassengerInfante, ReactWidgetPassengerMenor, ReactWidgetPrice, ReactWidgetPriceInfante, ReactWidgetPriceMenor, ReactWidgetRangeWrapper, ReactWidgetSubFieldPrice, ReactWidgetSubFieldSubPrice
 # from .panels import PriceSnippetPanel, ReactPriceMultiplierComponent
 from wagtail.snippets.views.snippets import SnippetViewSet
 from wagtail.admin.ui.tables import DateColumn, UpdatedAtColumn
@@ -56,8 +56,12 @@ class DataPasajero(models.Model):
     namePassenger = models.CharField(max_length=500,verbose_name = "Nombre del Pasajero")
     email = models.EmailField(max_length=500, verbose_name = "Correo Electronico",unique=False) 
     namePaquete = models.CharField(max_length=500,verbose_name = "Nombre del Paquete")
-    unitaryPrice = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio")
-    numPasajeros = models.IntegerField(verbose_name="Numero de Pasajeros")
+    unitaryPrice = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Adulto")
+    unitaryPriceMenor = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Menor")
+    unitaryPriceInfante = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Infante")
+    numPasajeros = models.IntegerField(verbose_name="Numero de Pasajeros Adultos")
+    numPasajerosMenor = models.IntegerField(verbose_name="Numero de Pasajeros Menores")
+    numPasajerosInfante = models.IntegerField(verbose_name="Numero de Pasajeros Infantes")
     finalPrice = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Final")
     percentaje = models.IntegerField(verbose_name="Porcentage")
     unitaryPriceSub1 = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Final a Pagar")
@@ -95,7 +99,11 @@ class DataPasajero(models.Model):
                      ('namePassenger',quote(self.namePassenger)),
                      ('email',remove_com_from_email(self.email)),
                      ('unitaryPrice',self.unitaryPrice),
+                     ('unitaryPrice2',self.unitaryPriceMenor),
+                     ('unitaryPrice3',self.unitaryPriceInfante),
                      ('numPasajeros',self.numPasajeros),
+                     ('numPasajeros2',self.numPasajerosMenor),
+                     ('numPasajeros3',self.numPasajerosInfante),
                      ('finalPrice',self.finalPrice),
                      ('percentage',self.percentaje),
                      ('unitaryPriceSub1',self.unitaryPriceSub1),
@@ -139,7 +147,7 @@ class DataPasajeroViewSet(SnippetViewSet):
     # or
     list_filter = {"namePassenger": ["icontains"],"email":["icontains"],"namePaquete":["icontains"],"unitaryPrice":["lt","gt"]}
     edit_handler = TabbedInterface([
-        ObjectList([FieldPanel("namePassenger"),FieldPanel("email"),FieldPanel("namePaquete"),FieldPanel("unitaryPrice",widget=ReactWidgetPrice()),FieldPanel("numPasajeros",widget=ReactWidgetPassenger()),FieldPanel("finalPrice",widget=ReactWidgetMultiplier()),FieldPanel("percentaje",widget=ReactWidgetRangeWrapper()),FieldPanel("unitaryPriceSub1",widget=ReactWidgetSubFieldPrice()),FieldPanel("unitaryPriceSub2",widget=ReactWidgetSubFieldSubPrice()) ,FieldPanel("referiCode"),FieldPanel('link',widget=forms.TextInput(attrs={'disabled': 'disabled'}))], heading="Informacion General"),
+        ObjectList([FieldPanel("namePassenger"),FieldPanel("email"),FieldPanel("namePaquete"),FieldPanel("unitaryPrice",widget=ReactWidgetPrice()),FieldPanel("unitaryPriceMenor",widget=ReactWidgetPriceMenor()),FieldPanel("unitaryPriceInfante",widget=ReactWidgetPriceInfante()),FieldPanel("numPasajeros",widget=ReactWidgetPassenger()),FieldPanel("numPasajerosMenor",widget=ReactWidgetPassengerMenor()),FieldPanel("numPasajerosInfante",widget=ReactWidgetPassengerInfante()),FieldPanel("finalPrice",widget=ReactWidgetMultiplier()),FieldPanel("percentaje",widget=ReactWidgetRangeWrapper()),FieldPanel("unitaryPriceSub1",widget=ReactWidgetSubFieldPrice()),FieldPanel("unitaryPriceSub2",widget=ReactWidgetSubFieldSubPrice()) ,FieldPanel("referiCode"),FieldPanel('link',widget=forms.TextInput(attrs={'disabled': 'disabled'}))], heading="Informacion General"),
     ])
 
 register_snippet(DataPasajeroViewSet)

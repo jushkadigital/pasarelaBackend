@@ -45,6 +45,46 @@ class ReactWidgetPrice(NumberInput):
             ></div>
         """)
 
+class ReactWidgetPriceMenor(NumberInput):
+    template_name = None  # No se usará una plantilla, se renderiza directamente en `render`.
+
+    def render(self, name, value, attrs=None, renderer=None):
+        print(name)
+        print(value)
+        """
+        Renderiza el contenedor del widget React y pasa los datos iniciales.
+        """
+        value = value or ""  # Asegúrate de no pasar `None` a React
+        return mark_safe(f"""
+        <div
+                id="react-custom-widget-{name}"
+                data-type="PriceMenor"
+                data-field={name}
+                data-initial={value}
+            ></div>
+        """)
+
+class ReactWidgetPriceInfante(NumberInput):
+    template_name = None  # No se usará una plantilla, se renderiza directamente en `render`.
+
+    def render(self, name, value, attrs=None, renderer=None):
+        print(name)
+        print(value)
+        """
+        Renderiza el contenedor del widget React y pasa los datos iniciales.
+        """
+        value = value or ""  # Asegúrate de no pasar `None` a React
+        return mark_safe(f"""
+        <div
+                id="react-custom-widget-{name}"
+                data-type="PriceInfante"
+                data-field={name}
+                data-initial={value}
+            ></div>
+        """)
+
+
+
 
 class ReactWidgetMultiplier(NumberInput):
     template_name = None  # No se usará una plantilla, se renderiza directamente en `render`.
@@ -82,6 +122,7 @@ class ReactWidgetRangeWrapper(NumberInput):
                 data-initial={value}
             ></div>
         """)
+
 class ReactWidgetPassenger(NumberInput):
     template_name = None  # No se usará una plantilla, se renderiza directamente en `render`.
 
@@ -100,6 +141,45 @@ class ReactWidgetPassenger(NumberInput):
                 data-initial={value}
             ></div>
         """)
+
+class ReactWidgetPassengerMenor(NumberInput):
+    template_name = None  # No se usará una plantilla, se renderiza directamente en `render`.
+
+    def render(self, name, value, attrs=None, renderer=None):
+        print(name)
+        print(value)
+        """
+        Renderiza el contenedor del widget React y pasa los datos iniciales.
+        """
+        value = value or ""  # Asegúrate de no pasar `None` a React
+        return mark_safe(f"""
+        <div
+                id="react-custom-widget-{name}"
+                data-type="PassengerMenor"
+                data-field={name}
+                data-initial={value}
+            ></div>
+        """)
+
+class ReactWidgetPassengerInfante(NumberInput):
+    template_name = None  # No se usará una plantilla, se renderiza directamente en `render`.
+
+    def render(self, name, value, attrs=None, renderer=None):
+        print(name)
+        print(value)
+        """
+        Renderiza el contenedor del widget React y pasa los datos iniciales.
+        """
+        value = value or ""  # Asegúrate de no pasar `None` a React
+        return mark_safe(f"""
+        <div
+                id="react-custom-widget-{name}"
+                data-type="PassengerInfante"
+                data-field={name}
+                data-initial={value}
+            ></div>
+        """)
+
 
 
 class ReactWidgetSubFieldPrice(NumberInput):
