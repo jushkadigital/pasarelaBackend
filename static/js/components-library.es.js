@@ -112,7 +112,7 @@ class _ extends u {
     this.unsubscribe && this.unsubscribe();
   }
   render() {
-    const { name: e } = this.props, { sharedState: s } = this.state;
+    const { name: e } = this.props, { sharedState2: s } = this.state;
     return /* @__PURE__ */ a.jsx("div", { className: "myComponent", children: /* @__PURE__ */ a.jsx(
       "input",
       {
@@ -144,7 +144,7 @@ class P extends u {
     this.unsubscribe && this.unsubscribe();
   }
   render() {
-    const { name: e } = this.props, { sharedState: s } = this.state;
+    const { name: e } = this.props, { sharedState3: s } = this.state;
     return /* @__PURE__ */ a.jsx("div", { className: "myComponent", children: /* @__PURE__ */ a.jsx(
       "input",
       {

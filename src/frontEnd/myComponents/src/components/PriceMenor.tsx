@@ -37,13 +37,13 @@ class PriceMenor extends Component {
 
     render() {
         const { name} = this.props;
-        const { sharedState } = this.state;
+        const { sharedState2 } = this.state;
 
         return (
             <div className="myComponent">
                 <input
                     type="number"
-                    value={sharedState}
+                    value={sharedState2}
                     onChange={this.handleChange}
                     name={name}
                 />

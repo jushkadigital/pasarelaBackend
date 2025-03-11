@@ -18,11 +18,15 @@ import { createStore } from "https://cdn.skypack.dev/zustand/vanilla";
 
     updatePercentageShared: (percentage) => 
       set({percentageShared:percentage}),
+    updatePassengerShared: (passenger) => 
+      set({passengerShared:passenger}),
     updatePassengerShared2: (passenger) => 
       set({passengerShared2:passenger}),
     updatePassengerShared3: (passenger) => 
       set({passengerShared3:passenger}),
-    
+
+
+
 }));
 
     // Exponer la tienda al ámbito global
