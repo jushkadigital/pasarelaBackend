@@ -84,8 +84,12 @@ class DataPasajero(models.Model):
     )
     link = models.CharField(
         max_length=500,
-        verbose_name="Link Creado",
-        # editable=False,  # Hace que no se pueda modificar directamente en el modelo
+        verbose_name="Link Creado ES",
+        blank=True,  # Permite que sea vacío al guardar inicialmente
+    )
+    link2 = models.CharField(
+        max_length=500,
+        verbose_name="Link Creado EN",
         blank=True,  # Permite que sea vacío al guardar inicialmente
     )
     panels = [
@@ -111,8 +115,10 @@ class DataPasajero(models.Model):
                      ('referiCode',quote(self.referiCode)),
                      ('id',self.id))
         res = ["=".join(map(str, param)) for param in URLparams]
-        newLink = f"https://payment.pdsviajes.com/?{'&'.join(res)}"
+        newLink = f"https://payment.pdsviajes.com/es/?{'&'.join(res)}"
+        newLink2 = f"https://payment.pdsviajes.com/en/?{'&'.join(res)}"
         self.link = newLink
+        self.link2 = newLink2
         super().save(*args, **kwargs)
     def __str__(self):
         return self.namePaquete
@@ -147,7 +153,7 @@ class DataPasajeroViewSet(SnippetViewSet):
     # or
     list_filter = {"namePassenger": ["icontains"],"email":["icontains"],"namePaquete":["icontains"],"unitaryPrice":["lt","gt"]}
     edit_handler = TabbedInterface([
-        ObjectList([FieldPanel("namePassenger"),FieldPanel("email"),FieldPanel("namePaquete"),FieldPanel("unitaryPrice",widget=ReactWidgetPrice()),FieldPanel("unitaryPriceMenor",widget=ReactWidgetPriceMenor()),FieldPanel("unitaryPriceInfante",widget=ReactWidgetPriceInfante()),FieldPanel("numPasajeros",widget=ReactWidgetPassenger()),FieldPanel("numPasajerosMenor",widget=ReactWidgetPassengerMenor()),FieldPanel("numPasajerosInfante",widget=ReactWidgetPassengerInfante()),FieldPanel("finalPrice",widget=ReactWidgetMultiplier()),FieldPanel("percentaje",widget=ReactWidgetRangeWrapper()),FieldPanel("unitaryPriceSub1",widget=ReactWidgetSubFieldPrice()),FieldPanel("unitaryPriceSub2",widget=ReactWidgetSubFieldSubPrice()) ,FieldPanel("referiCode"),FieldPanel('link',widget=forms.TextInput(attrs={'disabled': 'disabled'}))], heading="Informacion General"),
+        ObjectList([FieldPanel("namePassenger"),FieldPanel("email"),FieldPanel("namePaquete"),FieldPanel("unitaryPrice",widget=ReactWidgetPrice()),FieldPanel("unitaryPriceMenor",widget=ReactWidgetPriceMenor()),FieldPanel("unitaryPriceInfante",widget=ReactWidgetPriceInfante()),FieldPanel("numPasajeros",widget=ReactWidgetPassenger()),FieldPanel("numPasajerosMenor",widget=ReactWidgetPassengerMenor()),FieldPanel("numPasajerosInfante",widget=ReactWidgetPassengerInfante()),FieldPanel("finalPrice",widget=ReactWidgetMultiplier()),FieldPanel("percentaje",widget=ReactWidgetRangeWrapper()),FieldPanel("unitaryPriceSub1",widget=ReactWidgetSubFieldPrice()),FieldPanel("unitaryPriceSub2",widget=ReactWidgetSubFieldSubPrice()) ,FieldPanel("referiCode"),FieldPanel('link',widget=forms.TextInput(attrs={'disabled': 'disabled'})),FieldPanel('link2',widget=forms.TextInput(attrs={'disabled': 'disabled'}))], heading="Informacion General"),
     ])
 
 register_snippet(DataPasajeroViewSet)
