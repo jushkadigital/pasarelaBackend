@@ -155,6 +155,7 @@ register_snippet(DataPasajeroViewSet)
 
 class DataGeneral(models.Model):
     terminosyCondiciones = RichTextField(blank=True,verbose_name="Terminos y Condiciones")
+    terminosyCondicionesEng = RichTextField(blank=True,verbose_name="Terminos y Condiciones Ingles")
     
     def save(self, *args, **kwargs):
         # Asegurarse de que solo hay una instancia
@@ -186,7 +187,7 @@ class Apis(models.Model):
 class DataGeneralViewSet(SnippetViewSet):
     model= DataGeneral
     icon = "tag"
-    list_display = ["terminosyCondiciones",UpdatedAtColumn()]
+    list_display = ["terminosyCondiciones","terminosyCondicionesEng",UpdatedAtColumn()]
     list_per_page = 1
     add_to_admin_menu = True
     menu_order = 550
@@ -195,7 +196,7 @@ class DataGeneralViewSet(SnippetViewSet):
     admin_url_namespace = "dataGeneral_views"
     base_url_path = "internal/dataGeneral"
     edit_handler = TabbedInterface([
-        ObjectList([FieldPanel('terminosyCondiciones')],heading="Data")
+        ObjectList([FieldPanel('terminosyCondiciones'),FieldPanel('terminosyCondicionesEng')],heading="Data")
     ])
 
 class ApisViewSet(SnippetViewSet):
