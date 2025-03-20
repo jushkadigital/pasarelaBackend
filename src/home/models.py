@@ -13,6 +13,7 @@ from django import forms
 from wagtail.models import TranslatableMixin,BootstrapTranslatableMixin
 from django.utils.translation import gettext, gettext_lazy
 from urllib.parse import quote
+import base64
 # Create your models here.
 
 
@@ -48,6 +49,10 @@ class Global(Page):
     ]
 
 def remove_com_from_email(email):
+    encoded = base64.urlsafe_b64encode(email.encode()).decode()
+    encoded = encoded.replace(".", "_")  # Reemplazar puntos
+    encoded = encoded.rstrip("=")
+    return encoded
     if email.endswith('.com'):
         return email.replace('.com', '')
     return email
@@ -114,6 +119,7 @@ class DataPasajero(models.Model):
                      ('unitaryPriceSub2',self.unitaryPriceSub2),
                      ('referiCode',quote(self.referiCode)),
                      ('id',self.id))
+        
         res = ["=".join(map(str, param)) for param in URLparams]
         newLink = f"https://payment.pdsviajes.com/es/?{'&'.join(res)}"
         newLink2 = f"https://payment.pdsviajes.com/en/?{'&'.join(res)}"
