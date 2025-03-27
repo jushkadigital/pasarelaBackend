@@ -99,6 +99,7 @@ class DataPasajero(models.Model):
     )
     panels = [
     ]
+
     # base_form_class = CustomValidateForm
 
     
@@ -126,6 +127,20 @@ class DataPasajero(models.Model):
         self.link = newLink
         self.link2 = newLink2
         super().save(*args, **kwargs)
+    def __str__(self):
+        return self.namePaquete
+
+class PaqueteMexico(models.Model):
+    namePaquete = models.CharField(max_length=500,verbose_name = "Nombre del Paquete")
+    unitaryPriceAdultAfter = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Adulto Antes")
+    unitaryPriceMenorAfter = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Menor Antes")
+    unitaryPriceAdultIn = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Adulto Durante")
+    unitaryPriceMenorIn = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Menor Durante")
+    unitaryPriceAdultBefore = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Adulto Despues")
+    unitaryPriceMenorBefore = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Menor Despues")
+    percentaje = models.IntegerField(verbose_name="Porcentage")
+    fechas = models.CharField(max_length=500,verbose_name ="Fechas")
+
     def __str__(self):
         return self.namePaquete
 
@@ -162,7 +177,6 @@ class DataPasajeroViewSet(SnippetViewSet):
         ObjectList([FieldPanel("namePassenger"),FieldPanel("email"),FieldPanel("namePaquete"),FieldPanel("unitaryPrice",widget=ReactWidgetPrice()),FieldPanel("unitaryPriceMenor",widget=ReactWidgetPriceMenor()),FieldPanel("unitaryPriceInfante",widget=ReactWidgetPriceInfante()),FieldPanel("numPasajeros",widget=ReactWidgetPassenger()),FieldPanel("numPasajerosMenor",widget=ReactWidgetPassengerMenor()),FieldPanel("numPasajerosInfante",widget=ReactWidgetPassengerInfante()),FieldPanel("finalPrice",widget=ReactWidgetMultiplier()),FieldPanel("percentaje",widget=ReactWidgetRangeWrapper()),FieldPanel("unitaryPriceSub1",widget=ReactWidgetSubFieldPrice()),FieldPanel("unitaryPriceSub2",widget=ReactWidgetSubFieldSubPrice()) ,FieldPanel("referiCode"),FieldPanel('link',widget=forms.TextInput(attrs={'disabled': 'disabled'})),FieldPanel('link2',widget=forms.TextInput(attrs={'disabled': 'disabled'}))], heading="Informacion General"),
     ])
 
-register_snippet(DataPasajeroViewSet)
 
 
 class DataGeneral(models.Model):
@@ -228,11 +242,31 @@ class ApisViewSet(SnippetViewSet):
         ),FieldPanel('idTienda'),FieldPanel('password'),FieldPanel("paypalClientId"),FieldPanel("paypalSecret"),FieldPanel("paypalUrl")],heading="Data")
     ])
 
+class DataPaqueteMexico(SnippetViewSet):
+    model = PaqueteMexico
+    icon = "tag"
+    list_display = ["namePaquete",UpdatedAtColumn()]
+    list_per_page = 50
+    add_to_admin_menu = True
+    menu_order = 200
+    copy_view_enabled = False
+    inspect_view_enabled = True
+    admin_url_namespace = "dataPaqueteMexico_views"
+    base_url_path = "internal/dataPaqueteMexico"
+    # alternatively, you can use the following instead of filterset_class
+    # list_filter = ["shirt_size"]
+    # or
+    edit_handler = TabbedInterface([
+        ObjectList([FieldPanel("namePaquete"),FieldPanel("unitaryPriceAdultBefore"),FieldPanel("unitaryPriceAdultIn"),FieldPanel("unitaryPriceAdultAfter"),FieldPanel("unitaryPriceMenorBefore"),FieldPanel("unitaryPriceMenorIn"),FieldPanel("unitaryPriceMenorAfter"),FieldPanel("percentaje"),FieldPanel("fechas")], heading="Precios")
+    ])
+
+register_snippet(DataPaqueteMexico)
+
+register_snippet(DataPasajeroViewSet)
+
 register_snippet(DataGeneralViewSet)
 
 register_snippet(ApisViewSet)
-
-#tt
 
 
 
