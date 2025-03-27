@@ -132,12 +132,17 @@ class DataPasajero(models.Model):
 
 class PaqueteMexico(models.Model):
     namePaquete = models.CharField(max_length=500,verbose_name = "Nombre del Paquete")
+
     unitaryPriceAdultAfter = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Adulto Antes")
     unitaryPriceMenorAfter = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Menor Antes")
+    unitaryPriceChildAfter = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Ninio Antes")
     unitaryPriceAdultIn = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Adulto Durante")
     unitaryPriceMenorIn = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Menor Durante")
+    unitaryPriceChildIn = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Ninio Antes")
     unitaryPriceAdultBefore = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Adulto Despues")
     unitaryPriceMenorBefore = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Menor Despues")
+    unitaryPriceChildBefore = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Ninio Despues")
+
     percentaje = models.IntegerField(verbose_name="Porcentage")
     fechas = models.CharField(max_length=500,verbose_name ="Fechas")
 
@@ -257,7 +262,7 @@ class DataPaqueteMexico(SnippetViewSet):
     # list_filter = ["shirt_size"]
     # or
     edit_handler = TabbedInterface([
-        ObjectList([FieldPanel("namePaquete"),FieldPanel("unitaryPriceAdultBefore"),FieldPanel("unitaryPriceAdultIn"),FieldPanel("unitaryPriceAdultAfter"),FieldPanel("unitaryPriceMenorBefore"),FieldPanel("unitaryPriceMenorIn"),FieldPanel("unitaryPriceMenorAfter"),FieldPanel("percentaje"),FieldPanel("fechas")], heading="Precios")
+        ObjectList([FieldPanel("namePaquete"),FieldPanel("unitaryPriceAdultBefore"),FieldPanel("unitaryPriceAdultIn"),FieldPanel("unitaryPriceAdultAfter"),FieldPanel("unitaryPriceMenorBefore"),FieldPanel("unitaryPriceMenorIn"),FieldPanel("unitaryPriceMenorAfter"),FieldPanel("unitaryPriceChildBefore"),FieldPanel("unitaryPriceChildIn"),FieldPanel("unitaryPriceChildAfter"),FieldPanel("percentaje"),FieldPanel("fechas")], heading="Precios")
     ])
 
 register_snippet(DataPaqueteMexico)

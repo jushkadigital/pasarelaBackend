@@ -33,10 +33,13 @@ class CustomSnippetDataPaqueteMexicoApiViewSet(BaseAPIViewSet):
     body_fields = BaseAPIViewSet.body_fields + ['namePaquete',
                                                 'unitaryPriceAdultAfter',
                                                 'unitaryPriceMenorAfter',
+                                                'unitaryPriceChildAfter',
                                                 'unitaryPriceAdultIn',
                                                 'unitaryPriceMenorIn',
+                                                'unitaryPriceChildIn'
                                                 'unitaryPriceAdultBefore',
                                                 'unitaryPriceMenorBefore',
+                                                'unitaryPriceChildBefore',
                                                 'percentaje','fechas']
     renderer_classes = [JSONRenderer]
     name = "dataPaqueteMexico"
