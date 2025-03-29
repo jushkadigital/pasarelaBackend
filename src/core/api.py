@@ -36,7 +36,7 @@ class CustomSnippetDataPaqueteMexicoApiViewSet(BaseAPIViewSet):
                                                 'unitaryPriceChildAfter',
                                                 'unitaryPriceAdultIn',
                                                 'unitaryPriceMenorIn',
-                                                'unitaryPriceChildIn'
+                                                'unitaryPriceChildIn',
                                                 'unitaryPriceAdultBefore',
                                                 'unitaryPriceMenorBefore',
                                                 'unitaryPriceChildBefore',
