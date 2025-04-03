@@ -133,15 +133,15 @@ class DataPasajero(models.Model):
 class PaqueteMexico(models.Model):
     namePaquete = models.CharField(max_length=500,verbose_name = "Nombre del Paquete")
 
-    unitaryPriceAdultAfter = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Adulto Antes")
-    unitaryPriceMenorAfter = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Menor Antes")
-    unitaryPriceChildAfter = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Ninio Antes")
+    unitaryPriceAdultBefore = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Adulto Antes")
+    unitaryPriceMenorBefore = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Menor Antes")
+    unitaryPriceChildBefore = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Niño Antes")
     unitaryPriceAdultIn = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Adulto Durante")
     unitaryPriceMenorIn = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Menor Durante")
-    unitaryPriceChildIn = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Ninio Durante")
-    unitaryPriceAdultBefore = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Adulto Despues")
-    unitaryPriceMenorBefore = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Menor Despues")
-    unitaryPriceChildBefore = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Ninio Despues")
+    unitaryPriceChildIn = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Niño Durante")
+    unitaryPriceAdultAfter = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Adulto Despues")
+    unitaryPriceMenorAfter = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Menor Despues")
+    unitaryPriceChildAfter = models.DecimalField(max_digits=6, decimal_places=2,verbose_name="Precio Niño Despues")
 
     percentaje = models.IntegerField(verbose_name="Porcentage")
     fechas = models.CharField(max_length=500,verbose_name ="Fechas")
