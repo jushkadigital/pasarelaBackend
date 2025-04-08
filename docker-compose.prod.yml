@@ -9,9 +9,10 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
   prod:
-    build:
-      context: .
-      dockerfile: Dockerfile.prod
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile.prod
+    image: urgosxd7/pasarelabackend
     # command: python manage.py runserver 0.0.0.0:8000
     command: gunicorn src.core.wsgi:application --bind 0.0.0.0:8000
     depends_on:
@@ -20,14 +21,14 @@ services:
       - ./.env.prod
     expose:
       - 8000
-  nginx:
-    build: 
-      context: ./nginx
-      dockerfile: Dockerfile.prod
-    ports:
-      - 1137:80
-    depends_on:
-      - prod
+  # nginx:
+  #   build: 
+  #     context: ./nginx
+  #     dockerfile: Dockerfile.prod
+  #   ports:
+  #     - 1137:80
+  #   depends_on:
+  #     - prod
 volumes:
   postgres_data:
 
