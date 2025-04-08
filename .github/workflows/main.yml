@@ -36,9 +36,10 @@ jobs:
 
       # Paso 4: Despliegue en VPS
       - name: Deploy to VPS
-        uses: appleboy/ssh-action@v1
+        uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.VPS_IP }}
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          script: echo "¡Conexión exitosa!"
+          script: |
+            echo "Conexion exitosa!"
