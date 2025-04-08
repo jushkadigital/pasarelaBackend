@@ -1,0 +1,49 @@
+name: Smart Docker Deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Dockerfile.prod'  # Build solo si cambia esto
+      - 'src/**'           # Despliegue también si hay cambios en código
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Paso 1: Checkout
+      - uses: actions/checkout@v4
+
+      # Paso 2: Login a Docker Hub (SOLO si cambió Dockerfile.prod)
+      - name: Docker Hub Login
+        if: contains(github.event.head_commit.modified, 'Dockerfile.prod')
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+      # Paso 3: Build y Push (SOLO si cambió Dockerfile.prod)
+      - name: Build and Push
+        if: contains(github.event.head_commit.modified, 'Dockerfile.prod')
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile.prod
+          push: true
+          tags: urgosxd7/mi-app-prod:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      # Paso 4: Despliegue en VPS
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_IP }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd /home/ubuntu/py/pasarelaBackend
+            docker compose -f docker-compose.prod.yml down
+            git pull origin main
+            docker compose -f docker-compose.prod.yml up -d --build 
+            docker system prune -f
