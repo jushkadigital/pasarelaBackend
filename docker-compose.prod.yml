@@ -21,14 +21,6 @@ services:
       - ./.env.prod
     expose:
       - 8000
-  # nginx:
-  #   build: 
-  #     context: ./nginx
-  #     dockerfile: Dockerfile.prod
-  #   ports:
-  #     - 1137:80
-  #   depends_on:
-  #     - prod
 volumes:
   postgres_data:
 
