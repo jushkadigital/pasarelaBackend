@@ -41,9 +41,4 @@ jobs:
           host: ${{ secrets.VPS_IP }}
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          script: |
-            cd /home/ubuntu/py/pasarelaBackend
-            docker compose -f docker-compose.prod.yml down
-            git pull origin main
-            docker compose -f docker-compose.prod.yml up -d --build 
-            docker system prune -f
+          script: echo "¡Conexión exitosa!"
