@@ -1,4 +1,3 @@
-
 # api.py
 from wagtail.api.v2.views import BaseAPIViewSet, PagesAPIViewSet
 from wagtail.api.v2.router import WagtailAPIRouter
