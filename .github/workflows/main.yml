@@ -1,5 +1,4 @@
-  name: Smart Docker Deploy
-
+name: Smart Docker Deploy
 on:
   push:
     branches: [main]
