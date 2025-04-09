@@ -1,4 +1,4 @@
-name: Smart Docker Deploy
+  name: Smart Docker Deploy
 
 on:
   push:
@@ -36,7 +36,7 @@ jobs:
 
       # Paso 4: Despliegue en VPS
       - name: Deploy to VPS
-        uses: appleboy/ssh-action@v1.0.0
+        uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.VPS_IP }}
           username: ${{ secrets.VPS_USERNAME }}
