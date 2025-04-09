@@ -9,6 +9,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: actions
     steps:
       # Paso 1: Checkout
       - uses: actions/checkout@v4
@@ -37,9 +38,13 @@ jobs:
       - name: Deploy to VPS
         uses: appleboy/ssh-action@v1
         with:
-          host: 195.35.9.171
-          username: root
+          host: ${{ secrets.VPS_IP }}
+          username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.VPS_SSH_KEY }}
           port: 22
           script: |
-            echo "Conexion exitosa!"
+            cd /home/ubuntu/py/pasarelaBackend
+            docker compose -f docker-compose.prod.yml down
+            git pull origin main
+            docker compose -f docker-compose.prod.yml up -d --build
+            docker system prune -f
