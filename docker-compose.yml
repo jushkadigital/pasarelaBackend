@@ -30,33 +30,6 @@ services:
       - /home/chamba/Desktop/py/pasarelaBackend/static:/app/static
       - shared-volume:/app/.venv
 
-  lunarvim:
-    build:
-      context: .
-      dockerfile: Dockerfile.lunarvim  # Usa el Dockerfile específico para LunarVim
-      args:
-        gid: ${GROUPID}
-        uid: ${USERID}
-    environment:
-      - DISPLAY=${DISPLAY}
-    container_name: lunarvim_container # Nombre del contenedor
-    depends_on:
-      - dev
-    volumes:
-      - .:/home/lunaruser/project      # Monta el directorio actual en el contenedor
-      - /tmp/.X11-unix:/tmp/.X11-unix:ro
-      - /home/chamba/.config/lvim:/home/lunaruser/.config/lvim
-      - shared-volume:/home/lunaruser/project/.venv
-    tty: true
-    stdin_open: true
-  nginx:
-    build: 
-      context: ./nginx
-      dockerfile: Dockerfile
-    ports:
-      - 1337:80
-    depends_on:
-      - dev
 volumes:
   postgres_data:
   shared-volume:

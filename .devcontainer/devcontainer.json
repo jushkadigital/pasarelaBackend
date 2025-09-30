@@ -1,0 +1,8 @@
+{
+  "name": "Dev Container for Python App",
+  "build": {
+    "dockerfile": "../Dockerfile.dev"
+  },
+  "workspaceFolder": "/app",
+  "remoteUser": "lunar_user"
+}

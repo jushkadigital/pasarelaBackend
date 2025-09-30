@@ -1,11 +1,12 @@
-FROM python:3.11-buster as builder
+# Stage 1: Builder
+FROM python:3.11-bookworm as builder
 
 RUN pip install poetry==1.4.2
 
 ENV POETRY_NO_INTERACTION=1 \
-    POETRY_VIRTUALENVS_IN_PROJECT=1 \
-    POETRY_VIRTUALENVS_CREATE=1 \
-    POETRY_CACHE_DIR=/tmp/poetry_cache
+  POETRY_VIRTUALENVS_IN_PROJECT=1 \
+  POETRY_VIRTUALENVS_CREATE=1 \
+  POETRY_CACHE_DIR=/tmp/poetry_cache
 
 WORKDIR /app
 
@@ -17,14 +18,8 @@ RUN touch README.md
 
 RUN poetry install --no-root && rm -rf $POETRY_CACHE_DIR
 
-FROM python:3.11-slim-buster as runtime
-
-
-
-
-
-# ENV VIRTUAL_ENV=/app/.venv \
-    # PATH="/app/.venv/bin:$PATH"
+# Stage 2: Runtime
+FROM python:3.11-slim-bookworm as runtime
 
 WORKDIR /app
 
@@ -32,46 +27,35 @@ COPY --from=builder /app/.venv ./.venv
 
 ENV PATH="/app/.venv/bin:$PATH"
 
-
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# install system dependencies
-RUN apt-get update && apt-get install -y \  
-  netcat \
+# Instalar dependencias del sistema
+RUN apt-get update && apt-get install -y \
+  netcat-openbsd \
   curl \
   build-essential \
+  git \
   && rm -rf /var/lib/apt/lists/*
 
 # Instalar Node.js (LTS) y npm
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
-    apt-get install -y nodejs
+  apt-get install -y nodejs
 
+# Crear el usuario y el grupo para la aplicación con el mismo nombre
+RUN useradd -m --uid 10001 -G users lunar_user
 
-COPY manage.py .
+# Copiar todo el código fuente del proyecto al contenedor
+COPY . /app
 
-COPY ./entrypoint.sh .
+# Asegurarse de que el script entrypoint.sh tenga permisos de ejecución
+# y eliminar los saltos de línea de Windows
+RUN sed -i 's/\r$//g' /app/entrypoint.sh && chmod +x /app/entrypoint.sh
 
-RUN sed -i 's/\r$//g' ./entrypoint.sh
+# Asignar la propiedad de todos los archivos de la aplicación al nuevo usuario
+RUN chown -R lunar_user:users /app
+# Cambiar al usuario no privilegiado
+USER lunar_user
 
-RUN chmod +x ./entrypoint.sh
-
-ARG gid=1001
-ARG uid=1001
-ARG user=lunaruser
-ARG group=docker
-
-
-
-RUN groupadd -g ${gid} ${group} && \
-    useradd -u ${uid} -g ${group} -s /bin/bash -m ${user}
-
-
-# Cambiar al usuario creado
-USER ${user}
-
-
-
-
+# Establecer el punto de entrada
 ENTRYPOINT ["./entrypoint.sh"]
-
