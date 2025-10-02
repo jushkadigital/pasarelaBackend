@@ -8,6 +8,10 @@ services:
       - POSTGRES_DB=pasarelaProduction
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    
+    networks:
+      # Conecta el servicio postgres a la nueva red interna para comunicarse con la aplicación
+      - db_network
   prod:
     # build:
     #   context: .
@@ -21,6 +25,12 @@ services:
       - ./.env.prod
     expose:
       - 8000
+    
+    networks:
+      # Conecta el servicio payloaubd a la red externa para comunicarse con el proxy
+      - proxiable
+      # Conecta el servicio payload a la nueva red interna para comunicarse con la base de datos
+      - db_network
 volumes:
   postgres_data:
 
@@ -28,3 +38,6 @@ networks:
   default:
     external: true
     name: proxiable
+  
+  db_network:
+    driver: bridge
